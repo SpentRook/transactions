@@ -11,14 +11,14 @@ export class WalletController {
     
     createWallet = async (req: Request, res: Response) => {
         try {
-            const { name, userId } = req.body;
+            const { name, userId, amount } = req.body;
             if (!name || !userId) {
                 return res.status(400).json({ error: 'Missing fields' });
             }
             if (typeof name !== 'string' || typeof userId !== 'string') {
                 return res.status(400).json({ error: 'Invalid fields' });
             }
-            const wallet = new WalletEntity(name, userId);
+            const wallet = new WalletEntity(name, userId, amount);
             await this.walletRepository.createWallet(wallet);
             res.status(201).json(wallet);
         } catch (error) {
